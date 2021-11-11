@@ -8,7 +8,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`listening at port ${PORT}`);
 });
-app.use(express.static("public"));
+app.use(express.static("static"));
 app.use(express.json());
 
 app.get("/api", (req, res) => {
