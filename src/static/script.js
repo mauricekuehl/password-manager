@@ -1,15 +1,30 @@
 document
   .querySelector("#loginForm")
   .addEventListener("submit", async (form) => {
-    const username = form.srcElement.username.value;
-    const password = form.srcElement.password.value;
-    const key = await digestMessage(username + password);
-    const data = await fetch("/api", { headers: { Authorization: 1 } }).then(
-      (response) => response.json()
-    );
-    console.log(data);
+    try {
+      const username = form.srcElement.username.value;
+      const password = form.srcElement.password.value;
+      const key = await digestMessage(username + password);
+      const data = await fetch("/api", {
+        headers: { Authorization: key },
+      }).then((response) => {
+        if (response.status == 409) {
+          console.log(response);
+          wrongLogin();
+        } else {
+          response.json();
+          localStorage.setItem("key", key);
+          console.log("login", key);
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
   });
-
+function wrongLogin() {
+  console.log("wrongLogin");
+}
 async function digestMessage(message) {
   const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message

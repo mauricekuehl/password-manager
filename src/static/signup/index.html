@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>signup</h1>
+    <form action="#" id="signupForm" onsubmit="return false">
+      <input type="text" id="username" name="username" />
+      <input type="password" id="password" name="password" />
+      <input type="submit" value="signup" />
+    </form>
+  </body>
+  <script>
+    document
+      .querySelector("#signupForm")
+      .addEventListener("submit", async (form) => {
+        const username = form.srcElement.username.value;
+        const password = form.srcElement.password.value;
+        const key = await digestMessage(username + password);
+        try {
+          await fetch("/api/signup", {
+            method: "POST",
+            headers: { Authorization: key },
+          });
+          localStorage.setItem("key", key);
+          window.location.replace("/");
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+    async function digestMessage(message) {
+      const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+      const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
+      const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(""); // convert bytes to hex string
+      return hashHex;
+    }
+  </script>
+</html>

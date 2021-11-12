@@ -19,7 +19,7 @@ app.get("/api", (req, res) => {
       res.json(JSON.parse(data));
     });
   } else {
-    res.sendStatus(409);
+    res.status(409).send({ message: "wrong auth" });
   }
 });
 
@@ -27,7 +27,7 @@ app.post("/api/signup", (req, res) => {
   const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;
   if (fs.existsSync(path)) {
-    res.sendStatus(409).send();
+    res.status(409).send({ message: "wrong auth" });
     console.log("allready existing");
   } else {
     fs.writeFile(path, JSON.stringify({ key: key }), "utf8", (err, data) => {
@@ -50,7 +50,7 @@ app.post("/api", (req, res) => {
       });
     });
   } else {
-    res.status(409).send();
+    res.status(409).send({ message: "wrong auth" });
   }
 });
 
@@ -67,7 +67,7 @@ app.delete("/api", (req, res) => {
       });
     });
   } else {
-    res.status(409).send();
+    res.status(409).send({ message: "wrong auth" });
   }
 });
 
