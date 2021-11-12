@@ -1,10 +1,10 @@
 document
   .querySelector("#loginForm")
   .addEventListener("submit", async (form) => {
-    const username = form.originalTarget.username.value;
-    const password = form.originalTarget.password.value;
+    const username = form.srcElement.username.value;
+    const password = form.srcElement.password.value;
     const key = await digestMessage(username + password);
-    const data = await fetch("/api", { headers: { Authorization: "1" } }).then(
+    const data = await fetch("/api", { headers: { Authorization: 1 } }).then(
       (response) => response.json()
     );
     console.log(data);
