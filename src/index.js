@@ -12,7 +12,7 @@ app.use(express.static("static"));
 app.use(express.json());
 
 app.get("/api", (req, res) => {
-  const key = hash(req.body.auth);
+  const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;
   if (fs.existsSync(path)) {
     fs.readFile(path, (err, data) => {
@@ -24,21 +24,21 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/signup", (req, res) => {
-  const key = hash(req.body.auth);
+  const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;
   if (fs.existsSync(path)) {
     res.sendStatus(409).send();
     console.log("allready existing");
   } else {
     fs.writeFile(path, JSON.stringify({ key: key }), "utf8", (err, data) => {
-      console.error(err, data);
+      if (err) console.error(err, data);
     });
     res.sendStatus(200);
   }
 });
 
 app.post("/api", (req, res) => {
-  const key = hash(req.body.auth);
+  const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;
   if (fs.existsSync(path)) {
     fs.readFile(path, (err, data) => {
@@ -55,7 +55,7 @@ app.post("/api", (req, res) => {
 });
 
 app.delete("/api", (req, res) => {
-  const key = hash(req.body.auth);
+  const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;
   if (fs.existsSync(path)) {
     fs.readFile(path, (err, data) => {
