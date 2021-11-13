@@ -22,7 +22,6 @@ app.get("/api", (req, res) => {
     res.status(409).send({ message: "wrong auth" });
   }
 });
-
 app.post("/api/signup", (req, res) => {
   const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;

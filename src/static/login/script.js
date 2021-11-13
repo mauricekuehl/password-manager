@@ -13,7 +13,9 @@ document
           wrongLogin();
         } else {
           response.json();
-          localStorage.setItem("key", key);
+          sessionStorage.setItem("key", key);
+          sessionStorage.setItem("data", response.body);
+          window.location.replace("/app");
           console.log("login", key);
         }
       });
