@@ -1,29 +1,29 @@
 document
   .querySelector("#loginForm")
   .addEventListener("submit", async (form) => {
+    //try {
+    const username = form.srcElement.username.value;
+    const password = form.srcElement.password.value;
+    const key = await digestMessage(username + password);
     try {
-      const username = form.srcElement.username.value;
-      const password = form.srcElement.password.value;
-      const key = await digestMessage(username + password);
-      const data = await fetch("/api", {
+      fetch("/api", {
         headers: { Authorization: key },
-      }).then((response) => {
-        if (response.status == 409) {
-          console.log(response);
-          wrongLogin();
-        } else {
-          response.json();
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          const data = res;
+          localStorage.setItem("key", key);
           sessionStorage.setItem("key", key);
-          sessionStorage.setItem("data", response.body);
+          sessionStorage.setItem("data", JSON.stringify(data));
           window.location.replace("/app");
-          console.log("login", key);
-        }
-      });
+        });
     } catch (error) {
       console.error(error);
+      wrongLogin();
       alert(error);
     }
   });
+
 function wrongLogin() {
   console.log("wrongLogin");
 }
