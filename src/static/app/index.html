@@ -4,26 +4,55 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
     <a href="/login">switch acc</a>
     <h1>Main app</h1>
     <button id="reload">reload</button>
-    <button data-modal-target="#modal">Open Modal</button>
+    <button id="openModal">Open Modal</button>
     <div class="modal" id="addRecordModal">
       <div class="modal-header">
         <div class="title">Add Record</div>
-        <button data-close-button class="close-button">&times;</button>
+        <button id="closeModal">&times;</button>
       </div>
       <div class="modal-body">
-        <form action="#" id="addRecordForm" onsubmit="return false">
-          <input type="text" name="name" id="name" required />
-          <input type="text" name="username" id="username" />
-          <input type="password" name="passoword" id="password" />
-          <input type="url" name="url" id="url" />
-          <input type="text" name="totp" id="totp" />
-          <textarea name="notes" id="notes" cols="20" rows="2"></textarea>
+        <form action="" id="addRecordForm">
+          <label for="name">name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="name"
+            required
+          />
+          <label for="username">username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="username"
+          />
+          <label for="password">password</label>
+          <input
+            type="password"
+            name="passoword"
+            id="password"
+            placeholder="password"
+          />
+          <label for="url">url</label>
+          <input type="url" name="url" id="url" placeholder="url" />
+          <label for="totp">totp</label>
+          <input type="text" name="totp" id="totp" placeholder="totp" />
+          <label for="notes">notes</label>
+          <textarea
+            name="notes"
+            id="notes"
+            cols="20"
+            rows="2"
+            placeholder="notes"
+          ></textarea>
           <input type="submit" value="submit" />
         </form>
       </div>

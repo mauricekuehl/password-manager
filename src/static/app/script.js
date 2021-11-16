@@ -55,4 +55,11 @@ document.querySelector("#addRecordForm").addEventListener("submit", (form) => {
   let newData = JSON.parse(sessionStorage.getItem("data"));
   newData[form.srcElement.name.value] = data;
   sessionStorage.setItem("data", JSON.stringify(newData));
+  document.querySelector("#addRecordModal").style.visibility = "hidden";
+});
+document.querySelector("#openModal").addEventListener("click", (elm) => {
+  document.querySelector("#addRecordModal").style.visibility = "visible";
+});
+document.querySelector("#closeModal").addEventListener("click", (elm) => {
+  document.querySelector("#addRecordModal").style.visibility = "hidden";
 });
