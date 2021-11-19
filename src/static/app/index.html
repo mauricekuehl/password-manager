@@ -11,11 +11,13 @@
     <a href="/login">switch acc</a>
     <h1>Main app</h1>
     <button id="reload">reload</button>
-    <button id="openModal">Open Modal</button>
+    <button data-modal-target="#addRecordModal" id="openModal">
+      Open Modal
+    </button>
     <div class="modal" id="addRecordModal">
       <div class="modal-header">
         <div class="title">Add Record</div>
-        <button id="closeModal">&times;</button>
+        <button data-close-button class="close-button">&times;</button>
       </div>
       <div class="modal-body">
         <form action="" id="addRecordForm">
