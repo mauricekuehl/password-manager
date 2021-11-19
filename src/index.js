@@ -29,7 +29,7 @@ app.post("/api/signup", (req, res) => {
     res.status(409).send({ message: "wrong auth" });
     console.log("allready existing");
   } else {
-    fs.writeFile(path, JSON.stringify({ key: key }), "utf8", (err, data) => {
+    fs.writeFile(path, JSON.stringify({}), "utf8", (err, data) => {
       if (err) console.error(err, data);
     });
     res.sendStatus(200);
