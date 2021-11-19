@@ -1,26 +1,21 @@
 document
   .querySelector("#loginForm")
   .addEventListener("submit", async (form) => {
-    //try {
-    const username = form.srcElement.username.value;
-    const password = form.srcElement.password.value;
-    const key = await digestMessage(username + password);
     try {
-      fetch("/api", {
+      const username = form.srcElement.username.value;
+      const password = form.srcElement.password.value;
+      const key = await digestMessage(username + password);
+      let res = await fetch("/api", {
         headers: { Authorization: key },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          const data = res;
-          localStorage.setItem("key", key);
-          sessionStorage.setItem("key", key);
-          sessionStorage.setItem("data", JSON.stringify(data));
-          window.location.replace("/app");
-        });
+      });
+      if (!res.ok) throw new Error(res.status);
+      res = res.json();
+      sessionStorage.setItem("key", key);
+      sessionStorage.setItem("data", JSON.stringify(res));
+      window.location.replace("/app");
     } catch (error) {
-      console.error(error);
       wrongLogin();
-      alert(error);
+      console.error(error);
     }
   });
 
