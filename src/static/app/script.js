@@ -6,34 +6,57 @@ if ("key" in sessionStorage && "data" in sessionStorage) {
 document.querySelector("#reload").addEventListener("click", (elm) => {
   if ("key" in sessionStorage) {
     const key = sessionStorage.getItem("key");
-    try {
-      fetch("/api", {
-        headers: { Authorization: key },
+    fetch("/api", {
+      headers: { Authorization: key },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const data = res;
+        sessionStorage.setItem("key", key);
+        sessionStorage.setItem("data", JSON.stringify(data));
       })
-        .then((res) => res.json())
-        .then((res) => {
-          const data = res;
-          sessionStorage.setItem("key", key);
-          sessionStorage.setItem("data", JSON.stringify(data));
-        });
-      renderData();
-    } catch (error) {
-      console.error(error);
-      alert(error);
-      window.location.replace("/login");
-    }
+      .catch((error) => {
+        console.error(error);
+        alert(error);
+        window.location.replace("/login");
+      });
+    renderData();
   } else {
     window.location.replace("/login");
   }
 });
 function renderData() {
-  try {
-    console.log(JSON.parse(sessionStorage.getItem("data")));
-  } catch (error) {
-    console.error(error);
-    //window.location.replace("/login");
+  const data = JSON.parse(sessionStorage.getItem("data"));
+  let html = "";
+  for (const key in data) {
+    if (Object.hasOwnProperty.call(data, key)) {
+      const element = data[key];
+      if (element.url === "") {
+        var hostname = "";
+      } else {
+        var hostname = new URL(element.url).hostname;
+      }
+      html += `<div class="record">
+      <button class="copyToClipboard" data-value="${element.username}" >copy username</button>
+      <button class="copyToClipboard" data-value="${element.password}" >copy password</button>
+      <a href="${element.url}" target="_blank" rel=""><img src="" alt="go to url" data-value="${element.url}" /></a>
+      <img
+      height="64"
+      width="64"
+      src="https://icons.duckduckgo.com/ip3/${hostname}.ico"
+      />
+      </div>`;
+    }
   }
+  //I am aware that this is vulnerable to XSS, but there are bigger problems in case someone gets access to your passwords.
+  document.querySelector("#entries").innerHTML = html;
 }
+document.querySelectorAll(".copyToClipboard").forEach((button) => {
+  button.addEventListener("click", (elm) => {
+    // console.log(elm.srcElement.dataset.value);
+    navigator.clipboard.writeText(elm.srcElement.dataset.value);
+  });
+});
 document.querySelector("#addRecordForm").addEventListener("submit", (form) => {
   const username = form.srcElement.username.value;
   const data = {
@@ -57,6 +80,7 @@ document.querySelector("#addRecordForm").addEventListener("submit", (form) => {
   sessionStorage.setItem("data", JSON.stringify(newData));
   document.querySelector("#addRecordModal .close-button").click();
   form.preventDefault();
+  renderData();
 });
 const openModalButtons = document.querySelectorAll("[data-modal-target]");
 const closeModalButtons = document.querySelectorAll("[data-close-button]");
