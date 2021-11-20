@@ -53,11 +53,10 @@ function renderData() {
   }
   //I am aware that this is vulnerable to XSS, but there are bigger problems in case someone gets access to your passwords.
   document.querySelector("#entries").innerHTML = html;
-  //  document.querySelectorAll("[data-modal-target]").click;
 }
 document.querySelectorAll(".record .logo").forEach((img) => {
   img.addEventListener("click", (elm) => {
-    const form = document.querySelector("#addRecordForm");
+    const form = document.querySelector("#recordForm");
     const data = JSON.parse(sessionStorage.getItem("data"))[
       elm.srcElement.dataset.value
     ];
@@ -74,15 +73,7 @@ document.querySelectorAll(".copyToClipboard").forEach((button) => {
     navigator.clipboard.writeText(elm.srcElement.dataset.value);
   });
 });
-function clearForm(form) {
-  form.name.value = "";
-  form.username.value = "";
-  form.password.value = "";
-  form.url.value = "";
-  form.totp.value = "";
-  form.notes.value = "";
-}
-document.querySelector("#addRecordForm").addEventListener("submit", (form) => {
+document.querySelector("#recordForm").addEventListener("submit", (form) => {
   const data = {
     name: form.srcElement.name.value,
     username: form.srcElement.username.value,
@@ -102,27 +93,24 @@ document.querySelector("#addRecordForm").addEventListener("submit", (form) => {
   let newData = JSON.parse(sessionStorage.getItem("data"));
   newData[form.srcElement.name.value] = data;
   sessionStorage.setItem("data", JSON.stringify(newData));
-  document.querySelector("#addRecordModal .close-button").click();
+  document.querySelector("#recordModal .close-button").click();
   form.preventDefault();
   renderData();
 });
-const openModalButtons = document.querySelectorAll("[data-modal-target]");
-const closeModalButtons = document.querySelectorAll("[data-close-button]");
-const overlay = document.getElementById("overlay");
 
-openModalButtons.forEach((button) => {
+document.querySelectorAll("[data-modal-target]").forEach((button) => {
   button.addEventListener("click", () => {
     const modal = document.querySelector(button.dataset.modalTarget);
     openModal(modal);
   });
 });
-overlay.addEventListener("click", () => {
+document.getElementById("overlay").addEventListener("click", () => {
   const modals = document.querySelectorAll(".modal.active");
   modals.forEach((modal) => {
     closeModal(modal);
   });
 });
-closeModalButtons.forEach((button) => {
+document.querySelectorAll("[data-close-button]").forEach((button) => {
   button.addEventListener("click", () => {
     const modal = button.closest(".modal");
     closeModal(modal);
@@ -131,11 +119,17 @@ closeModalButtons.forEach((button) => {
 function openModal(modal) {
   if (modal == null) return;
   modal.classList.add("active");
-  overlay.classList.add("active");
+  document.getElementById("overlay").classList.add("active");
 }
 function closeModal(modal) {
   if (modal == null) return;
   modal.classList.remove("active");
-  overlay.classList.remove("active");
-  clearForm(document.querySelector("#addRecordForm"));
+  document.getElementById("overlay").classList.remove("active");
+  form = document.querySelector("#recordForm");
+  form.name.value = "";
+  form.username.value = "";
+  form.password.value = "";
+  form.url.value = "";
+  form.totp.value = "";
+  form.notes.value = "";
 }
