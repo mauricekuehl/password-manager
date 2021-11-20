@@ -11,16 +11,24 @@ document.querySelector("#reload").addEventListener("click", (elm) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const data = res;
+        let data = res;
+        Object.keys(data).map((key) => {
+          data[key] = JSON.parse(
+            CryptoJS.AES.decrypt(
+              data[key],
+              sessionStorage.getItem("vaultKey")
+            ).toString(CryptoJS.enc.Utf8)
+          );
+        });
         sessionStorage.setItem("key", key);
         sessionStorage.setItem("data", JSON.stringify(data));
+        renderData();
       })
       .catch((error) => {
         console.error(error);
         alert(error);
         window.location.replace("/login");
       });
-    renderData();
   } else {
     window.location.replace("/login");
   }
@@ -82,13 +90,20 @@ document.querySelector("#recordForm").addEventListener("submit", (form) => {
     totp: form.srcElement.totp.value,
     notes: form.srcElement.notes.value,
   };
+  const hashedName = CryptoJS.SHA256(data.name).toString();
+  console.log(hashedName);
+  const encrypedData = CryptoJS.AES.encrypt(
+    JSON.stringify(data),
+    sessionStorage.getItem("vaultKey")
+  ).toString();
+  console.log(encrypedData);
   fetch("/api", {
     method: "POST",
     headers: {
       Authorization: sessionStorage.getItem("key"),
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ name: hashedName, content: encrypedData }),
   });
   let newData = JSON.parse(sessionStorage.getItem("data"));
   newData[form.srcElement.name.value] = data;

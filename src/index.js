@@ -42,7 +42,7 @@ app.post("/api", (req, res) => {
   if (fs.existsSync(path)) {
     fs.readFile(path, (err, data) => {
       let fileData = JSON.parse(data);
-      fileData[req.body.name] = req.body;
+      fileData[req.body.name] = req.body.content;
       fs.writeFile(path, JSON.stringify(fileData), "utf8", (err, data) => {
         if (err) console.error(err, data);
         res.status(200).send();
