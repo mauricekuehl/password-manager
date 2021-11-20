@@ -52,15 +52,32 @@ function renderData() {
         />
         <button class="copyToClipboard" data-value="${elm.username}" >copy username</button>
         <button class="copyToClipboard" data-value="${elm.password}" >copy password</button>
-        <a href="${elm.url}}" target="_blank" rel="">
-          <img src="" alt="go to url" data-value="${elm.url}" />
-        </a>
+        <button id="deleteRecord" data-value="${key}" >delete</button>
+        <a href="${elm.url}" target="_blank" rel="">go to url</a>
         <p>${elm.name}</p>
       </div>`;
     }
   }
   //I am aware that this is vulnerable to XSS, but there are bigger problems in case someone gets access to your passwords.
   document.querySelector("#entries").innerHTML = html;
+  document.querySelectorAll("#deleteRecord").forEach((button) => {
+    button.addEventListener("click", (elm) => {
+      console.log(elm.srcElement.dataset.value);
+      const key = elm.srcElement.dataset.value;
+      let newData = JSON.parse(sessionStorage.getItem("data"));
+      delete newData[key];
+      sessionStorage.setItem("data", JSON.stringify(newData));
+      fetch("/api", {
+        method: "DELETE",
+        headers: {
+          Authorization: sessionStorage.getItem("key"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: key }),
+      });
+      renderData();
+    });
+  });
   document.querySelectorAll(".copyToClipboard").forEach((button) => {
     button.addEventListener("click", (elm) => {
       navigator.clipboard.writeText(elm.srcElement.dataset.value);
