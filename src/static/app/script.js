@@ -1,9 +1,9 @@
-if ("key" in sessionStorage && "data" in sessionStorage) {
-  renderData();
+if ("key" in sessionStorage && "vaultKey" in sessionStorage) {
+  getData();
 } else {
   window.location.replace("/login");
 }
-document.querySelector("#reload").addEventListener("click", (elm) => {
+function getData() {
   if ("key" in sessionStorage) {
     const key = sessionStorage.getItem("key");
     fetch("/api", {
@@ -32,7 +32,7 @@ document.querySelector("#reload").addEventListener("click", (elm) => {
   } else {
     window.location.replace("/login");
   }
-});
+}
 function renderData() {
   const data = JSON.parse(sessionStorage.getItem("data"));
   let html = "";
@@ -40,19 +40,19 @@ function renderData() {
     if (Object.hasOwnProperty.call(data, key)) {
       const elm = data[key];
       if (elm.url === "") {
-        var hostname = "";
+        var hostname = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
       } else {
         var hostname = new URL(elm.url).hostname;
       }
       html += `<div class="record">
-        <img data-value="${elm.name}" class="logo"
+        <img data-value="${key}" class="logo"
           height="64"
           width="64"
           src="https://icons.duckduckgo.com/ip3/${hostname}.ico"
         />
         <button class="copyToClipboard" data-value="${elm.username}" >copy username</button>
         <button class="copyToClipboard" data-value="${elm.password}" >copy password</button>
-        <a href="${elm.url}" target="_blank" rel="">
+        <a href="${elm.url}}" target="_blank" rel="">
           <img src="" alt="go to url" data-value="${elm.url}" />
         </a>
         <p>${elm.name}</p>
@@ -61,26 +61,27 @@ function renderData() {
   }
   //I am aware that this is vulnerable to XSS, but there are bigger problems in case someone gets access to your passwords.
   document.querySelector("#entries").innerHTML = html;
-}
-document.querySelectorAll(".record .logo").forEach((img) => {
-  img.addEventListener("click", (elm) => {
-    const form = document.querySelector("#recordForm");
-    const data = JSON.parse(sessionStorage.getItem("data"))[
-      elm.srcElement.dataset.value
-    ];
-    for (const key in data) {
-      if (Object.hasOwnProperty.call(data, key)) {
-        form[key].value = data[key];
+  document.querySelectorAll(".copyToClipboard").forEach((button) => {
+    button.addEventListener("click", (elm) => {
+      navigator.clipboard.writeText(elm.srcElement.dataset.value);
+    });
+  });
+  document.querySelectorAll(".record .logo").forEach((img) => {
+    img.addEventListener("click", (elm) => {
+      const form = document.querySelector("#recordForm");
+      const data = JSON.parse(sessionStorage.getItem("data"))[
+        elm.srcElement.dataset.value
+      ];
+      for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+          form[key].value = data[key];
+        }
       }
-    }
-    document.querySelector("#openModal").click();
+      document.querySelector("#openModal").click();
+    });
   });
-});
-document.querySelectorAll(".copyToClipboard").forEach((button) => {
-  button.addEventListener("click", (elm) => {
-    navigator.clipboard.writeText(elm.srcElement.dataset.value);
-  });
-});
+}
+document.querySelector("#reload").addEventListener("click", getData);
 document.querySelector("#recordForm").addEventListener("submit", (form) => {
   const data = {
     name: form.srcElement.name.value,
@@ -112,7 +113,6 @@ document.querySelector("#recordForm").addEventListener("submit", (form) => {
   form.preventDefault();
   renderData();
 });
-
 document.querySelectorAll("[data-modal-target]").forEach((button) => {
   button.addEventListener("click", () => {
     const modal = document.querySelector(button.dataset.modalTarget);

@@ -1,32 +1,20 @@
 document
   .querySelector("#loginForm")
   .addEventListener("submit", async (form) => {
-    try {
-      const username = form.srcElement.username.value;
-      const password = form.srcElement.password.value;
-      const key = await digestMessage(username + password);
-      const vaultKey = await digestMessage(password + key);
-      sessionStorage.setItem("vaultKey", vaultKey);
-      let res = await fetch("/api", {
-        headers: { Authorization: key },
-      });
-      if (!res.ok) throw new Error(res.status);
-      res = res.json();
-      Object.keys(res).map((key) => {
-        res[key] = JSON.parse(
-          CryptoJS.AES.decrypt(
-            res[key],
-            sessionStorage.getItem("vaultKey")
-          ).toString(CryptoJS.enc.Utf8)
-        );
-      });
-      sessionStorage.setItem("key", key);
-      sessionStorage.setItem("data", JSON.stringify(res));
-      window.location.replace("/app");
-    } catch (error) {
-      wrongLogin();
-      console.error(error);
+    const username = form.srcElement.username.value;
+    const password = form.srcElement.password.value;
+    const key = await digestMessage(username + password);
+    const vaultKey = await digestMessage(password + key);
+    const res = await fetch("/api/login", {
+      headers: { Authorization: key },
+    });
+    if (!res.ok) {
+      if (res.status == 409) wrongLogin();
+      return;
     }
+    sessionStorage.setItem("vaultKey", vaultKey);
+    sessionStorage.setItem("key", key);
+    window.location.replace("/app");
   });
 function wrongLogin() {
   console.log("wrongLogin");

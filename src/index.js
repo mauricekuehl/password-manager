@@ -22,6 +22,15 @@ app.get("/api", (req, res) => {
     res.status(409).send({ message: "wrong auth" });
   }
 });
+app.get("/api/login", (req, res) => {
+  const key = hash(req.header("Authorization"));
+  const path = `database/${key}.json`;
+  if (fs.existsSync(path)) {
+    res.status(200).send();
+  } else {
+    res.status(409).send({ message: "wrong auth" });
+  }
+});
 app.post("/api/signup", (req, res) => {
   const key = hash(req.header("Authorization"));
   const path = `database/${key}.json`;
