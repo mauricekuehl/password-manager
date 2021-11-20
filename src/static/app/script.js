@@ -1,37 +1,36 @@
-if ("key" in sessionStorage && "vaultKey" in sessionStorage) {
-  getData();
-} else {
-  window.location.replace("/login");
-}
+getData();
 function getData() {
-  if ("key" in sessionStorage) {
-    const key = sessionStorage.getItem("key");
-    fetch("/api", {
-      headers: { Authorization: key },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        let data = res;
-        Object.keys(data).map((key) => {
-          data[key] = JSON.parse(
-            CryptoJS.AES.decrypt(
-              data[key],
-              sessionStorage.getItem("vaultKey")
-            ).toString(CryptoJS.enc.Utf8)
-          );
-        });
-        sessionStorage.setItem("key", key);
-        sessionStorage.setItem("data", JSON.stringify(data));
-        renderData();
-      })
-      .catch((error) => {
-        console.error(error);
-        alert(error);
-        window.location.replace("/login");
-      });
+  if ("key" in sessionStorage && "vaultKey" in sessionStorage) {
+    var key = sessionStorage.getItem("key");
+    var vaultKey = sessionStorage.getItem("vaultKey");
+  } else if ("key" in localStorage && "vaultKey" in localStorage) {
+    var key = localStorage.getItem("key");
+    var vaultKey = localStorage.getItem("vaultKey");
   } else {
     window.location.replace("/login");
+    return;
   }
+  fetch("/api", {
+    headers: { Authorization: key },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      let data = res;
+      Object.keys(data).map((hashedName) => {
+        data[hashedName] = JSON.parse(
+          CryptoJS.AES.decrypt(data[hashedName], vaultKey).toString(
+            CryptoJS.enc.Utf8
+          )
+        );
+      });
+      sessionStorage.setItem("data", JSON.stringify(data));
+      renderData();
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error);
+      window.location.replace("/login");
+    });
 }
 function renderData() {
   const data = JSON.parse(sessionStorage.getItem("data"));

@@ -12,8 +12,13 @@ document
       if (res.status == 409) wrongLogin();
       return;
     }
-    sessionStorage.setItem("vaultKey", vaultKey);
-    sessionStorage.setItem("key", key);
+    if (form.srcElement.safe.checked === "on") {
+      localStorage.setItem("vaultKey", vaultKey);
+      localStorage.setItem("key", key);
+    } else {
+      sessionStorage.setItem("vaultKey", vaultKey);
+      sessionStorage.setItem("key", key);
+    }
     window.location.replace("/app");
   });
 function wrongLogin() {
