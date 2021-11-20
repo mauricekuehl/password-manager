@@ -11,7 +11,9 @@
     <a href="/login">switch acc</a>
     <h1>Main app</h1>
     <button id="reload">reload</button>
-    <button data-modal-target="#recordModal" id="openModal">Open Modal</button>
+    <button data-modal-target="#recordModal" id="openRecordModal">
+      Open Modal
+    </button>
     <div class="modal" id="recordModal">
       <div class="modal-header">
         <div class="title">Add/Change Record</div>
@@ -61,6 +63,11 @@
           <input type="submit" value="submit" />
         </form>
       </div>
+    </div>
+    <div class="modal" id="deleteConfirmation">
+      <div>delete Record</div>
+      <button id="approvedDeletion">ok</button>
+      <button data-close-button class="close-button">stop</button>
     </div>
     <div id="overlay"></div>
     <div id="entries"></div>

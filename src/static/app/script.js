@@ -62,8 +62,15 @@ function renderData() {
   document.querySelector("#entries").innerHTML = html;
   document.querySelectorAll("#deleteRecord").forEach((button) => {
     button.addEventListener("click", (elm) => {
-      console.log(elm.srcElement.dataset.value);
-      const key = elm.srcElement.dataset.value;
+      openRecordModal(document.querySelector("#deleteConfirmation"));
+      document.querySelector("#approvedDeletion").dataset.key =
+        elm.srcElement.dataset.value;
+    });
+  });
+  document
+    .querySelector("#approvedDeletion")
+    .addEventListener("click", (elm) => {
+      const key = elm.srcElement.dataset.key;
       let newData = JSON.parse(sessionStorage.getItem("data"));
       delete newData[key];
       sessionStorage.setItem("data", JSON.stringify(newData));
@@ -75,9 +82,9 @@ function renderData() {
         },
         body: JSON.stringify({ name: key }),
       });
+      closeModal(document.querySelector("#deleteConfirmation"));
       renderData();
     });
-  });
   document.querySelectorAll(".copyToClipboard").forEach((button) => {
     button.addEventListener("click", (elm) => {
       navigator.clipboard.writeText(elm.srcElement.dataset.value);
@@ -94,7 +101,7 @@ function renderData() {
           form[key].value = data[key];
         }
       }
-      document.querySelector("#openModal").click();
+      document.querySelector("#openRecordModal").click();
     });
   });
 }
@@ -133,7 +140,7 @@ document.querySelector("#recordForm").addEventListener("submit", (form) => {
 document.querySelectorAll("[data-modal-target]").forEach((button) => {
   button.addEventListener("click", () => {
     const modal = document.querySelector(button.dataset.modalTarget);
-    openModal(modal);
+    openRecordModal(modal);
   });
 });
 document.getElementById("overlay").addEventListener("click", () => {
@@ -148,7 +155,7 @@ document.querySelectorAll("[data-close-button]").forEach((button) => {
     closeModal(modal);
   });
 });
-function openModal(modal) {
+function openRecordModal(modal) {
   if (modal == null) return;
   modal.classList.add("active");
   document.getElementById("overlay").classList.add("active");
