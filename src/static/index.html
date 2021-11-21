@@ -4,12 +4,43 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main-page.css" />
     <title>Document</title>
   </head>
   <body>
-    <h1>This is a password manager</h1>
-    <a href="/login">login</a>
-    <a href="/signup">signup</a>
+    <main>
+      <h1>A minimalistic password manager</h1>
+      <div id="mainSection">
+        <h2>
+          This is a simple password manager that can be self-hosted, but is
+          available online for free. It is cloud synchronized and open source.
+        </h2>
+        <div id="codeOnGithub">
+          <h3>Check out the code on github</h3>
+          <a id="github" href="http://github.com/mauricekuehl/" target="_blank"
+            ><img src="./images/link-white.png"
+          /></a>
+        </div>
+        <a id="signup" href="/signup">signup</a>
+        <a href="/login">login</a>
+      </div>
+    </main>
+    <footer>
+      <div class="footerLine">
+        Made with <img src="./images/love.png" id="love" /> by
+        <a
+          target="_blank"
+          id="nameText"
+          href="https://linkedin.com/in/maurice-k%C3%BChl-ba3b19217"
+          >Maurice Kühl <img id="linkedinImg" src="./images/LI-In-Bug.png"
+        /></a>
+      </div>
+      <div class="footerLine">
+        <a target="_blank" href="https://github.com/mauricekuehl/"
+          >View project on Github
+          <img id="githubImg" src="./images/GitHub-Mark-Light-64px.png"
+        /></a>
+      </div>
+    </footer>
   </body>
 </html>

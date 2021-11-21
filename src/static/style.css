@@ -10,7 +10,8 @@ body {
   --highlight: #deb887;
   --light: #5cd4a6;
   --semilight: #292e2f;
-  width: 100%;
+  width: 99%;
+  height: 100%;
   background-color: var(--dark);
 }
 input,
@@ -27,7 +28,6 @@ button {
   outline: none;
   line-height: inherit;
   display: block;
-  box-sizing: border-box;
   word-break: normal;
 }
 input:focus,
@@ -44,4 +44,50 @@ input[type="submit"]:hover {
   background-color: var(--highlight);
   color: var(--dark);
   border-color: var(--dark);
+}
+a:not(footer a) {
+  background-color: var(--darklight);
+  border: 1px solid var(--semilight);
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.5rem;
+  outline: none;
+  line-height: inherit;
+  word-break: normal;
+  text-decoration: none;
+}
+a:hover:not(footer a) {
+  background-color: var(--semilight);
+  color: var(--highlight);
+  border-color: var(--highlight);
+}
+footer {
+  margin-top: 5rem;
+  width: 100vw;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #141420;
+}
+footer a {
+  text-decoration: none;
+  font-size: 1rem;
+}
+.footerLine {
+  width: auto;
+  font-size: 1rem;
+  color: var(--white);
+  padding: 0.5rem;
+}
+footer #nameText {
+  color: var(--highlight);
+}
+footer #linkedinImg {
+  height: auto;
+  width: 1.375rem;
+}
+footer #love,
+#githubImg {
+  width: 1.125rem;
 }
