@@ -5,16 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="signup.css" />
     <title>Document</title>
   </head>
   <body>
-    <h1>signup</h1>
-    <form action="#" id="signupForm" onsubmit="return false">
-      <input type="text" id="username" name="username" autofocus="autofocus" />
-      <input type="password" id="password" name="password" />
-      <input type="submit" value="signup" />
-      <a href="/login">login</a>
-    </form>
+    <main>
+      <h1>Create a Account</h1>
+      <form action="#" id="signupForm" onsubmit="return false">
+        <label for="username">username</label
+        ><input
+          type="text"
+          id="username"
+          name="username"
+          autofocus="autofocus"
+          required
+        />
+        <label for="password">password</label>
+        <input type="password" id="password" name="password" required />
+        <input type="submit" value="signup" />
+      </form>
+    </main>
+    <footer>
+      <div class="footerLine">
+        Made with <img src="../images/love.png" id="love" /> by
+        <a
+          target="_blank"
+          id="nameText"
+          href="https://linkedin.com/in/maurice-k%C3%BChl-ba3b19217"
+          >Maurice Kühl <img id="linkedinImg" src="../images/LI-In-Bug.png"
+        /></a>
+      </div>
+      <div class="footerLine">
+        <a target="_blank" href="https://github.com/mauricekuehl/"
+          >View project on Github
+          <img id="githubImg" src="../images/GitHub-Mark-Light-64px.png"
+        /></a>
+      </div>
+    </footer>
   </body>
   <script src="script.js"></script>
 </html>

@@ -1,7 +1,4 @@
 @import "style.css";
-html {
-  overflow-x: hidden;
-}
 body {
   margin: 0 auto;
   width: 80%;

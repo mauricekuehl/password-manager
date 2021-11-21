@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 140vh;
+}
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 25vh;
+}
+h1 {
+  font-size: 2.25rem;
+  padding: 1rem;
+}
+input {
+  margin: 1rem 0;
+  height: 3rem;
+}
+form input,
+form label {
+  font-size: 1.25rem;
+}
+input:not(input[type="submit"]) {
+  max-width: 21rem;
+  width: 80vw;
+}
+input[type="submit"] {
+  width: 6rem;
+}
+@media (max-width: 380px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+}
