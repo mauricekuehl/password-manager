@@ -49,23 +49,10 @@ input[type="submit"]:hover {
   color: var(--dark);
   border-color: var(--dark);
 }
-a:not(footer a) {
-  background-color: var(--darklight);
-  border: 1px solid var(--semilight);
-  padding: 0.375rem 0.5rem;
-  border-radius: 0.5rem;
-  outline: none;
-  line-height: inherit;
-  word-break: normal;
+a {
   text-decoration: none;
 }
-a:hover:not(footer a) {
-  background-color: var(--semilight);
-  color: var(--highlight);
-  border-color: var(--highlight);
-}
 footer {
-  /* margin-top: 5rem; */
   width: 100vw;
   height: 40vh;
   display: flex;
