@@ -9,12 +9,17 @@
     <title>Document</title>
   </head>
   <body>
-    <a href="/login">switch acc</a>
-    <h1>Main app</h1>
-    <button id="reload">reload</button>
-    <button data-modal-target="#recordModal" id="openRecordModal">
-      Open Modal
-    </button>
+    <main>
+    <nav>
+      <h1><a href="/">password manager</a></h1>
+      <div>
+        <button><a href="/login">switch acc</a></button>
+        <button id="reload">reload</button>
+        <button data-modal-target="#recordModal" id="openRecordModal">
+          add record
+        </button>
+      </div>
+    </nav>
     <div class="modal" id="recordModal">
       <div class="modal-header">
         <div class="title">Add/Change Record</div>
@@ -72,7 +77,23 @@
     </div>
     <div id="overlay"></div>
     <div id="entries"></div>
-    <div id="entriesModals"></div>
+    <footer>
+      <div class="footerLine">
+        Made with <img src="../images/love.png" id="love" /> by
+        <a
+          target="_blank"
+          id="nameText"
+          href="https://linkedin.com/in/maurice-k%C3%BChl-ba3b19217"
+          >Maurice Kühl <img id="linkedinImg" src="../images/LI-In-Bug.png"
+        /></a>
+      </div>
+      <div class="footerLine">
+        <a target="_blank" href="https://github.com/mauricekuehl/"
+          >View project on Github
+          <img id="githubImg" src="../images/GitHub-Mark-Light-64px.png"
+        /></a>
+      </div>
+    </footer>
   </body>
   <script src="../modules/rollups/aes.js"></script>
   <script src="../modules/rollups/sha256.js"></script>

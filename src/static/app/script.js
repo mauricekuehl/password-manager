@@ -52,15 +52,15 @@ function renderData() {
       }
       html += `<div class="record">
         <div id="nav">
-          <img src="../images/user.svg" class="copyToClipboard" data-value="${elm.username}" />
-          <img src="../images/key.svg" class="copyToClipboard" data-value="${elm.password}" />
-          <img src="../images/bin.svg" id="deleteRecord" data-value="${key}" />
+          <img src="../images/user.svg" class="copyToClipboard" data-value="${elm.username}" alt="copy username"/>
+          <img src="../images/key.svg" class="copyToClipboard" data-value="${elm.password}" alt="copy password"/>
+          <img src="../images/bin.svg" id="deleteRecord" data-value="${key}" alt="delete"/>
           <a href="${elm.url}" target="_blank" rel="">
-            <img src="../images/link.png" />
+            <img src="../images/link.png" alt="go to url"/>
           </a>
         </div>
-        <div id="img" data-value="${key}">
-          <img src="https://icons.duckduckgo.com/ip3/${hostname}.ico" />
+        <div id="logo" data-value="${key}">
+          <img src="https://icons.duckduckgo.com/ip3/${hostname}.ico" alt="change record"/>
           <p>${elm.name}</p>  
         </div>
       </div>`;
@@ -98,7 +98,7 @@ function renderData() {
       navigator.clipboard.writeText(elm.srcElement.dataset.value);
     });
   });
-  document.querySelectorAll(".record #img").forEach((record) => {
+  document.querySelectorAll(".record #logo").forEach((record) => {
     record.addEventListener("click", (elm) => {
       const form = document.querySelector("#recordForm");
       const data = JSON.parse(sessionStorage.getItem("data"))[
