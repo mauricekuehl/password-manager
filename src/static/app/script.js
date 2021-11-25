@@ -31,7 +31,6 @@ function getData() {
             .reduce((r, k) => ((r[k] = data[k]), r), {})
         )
       );
-      console.log(JSON.parse(sessionStorage.getItem("data")));
       renderData();
     })
     .catch((error) => {
@@ -103,7 +102,7 @@ function renderData() {
     record.addEventListener("click", (elm) => {
       const form = document.querySelector("#recordForm");
       const data = JSON.parse(sessionStorage.getItem("data"))[
-        elm.srcElement.dataset.value
+        elm.srcElement.parentElement.dataset.value
       ];
       for (const key in data) {
         if (Object.hasOwnProperty.call(data, key)) {
@@ -125,12 +124,10 @@ document.querySelector("#recordForm").addEventListener("submit", (form) => {
     notes: form.srcElement.notes.value,
   };
   const hashedName = CryptoJS.SHA256(data.name).toString();
-  console.log(hashedName);
   const encrypedData = CryptoJS.AES.encrypt(
     JSON.stringify(data),
     sessionStorage.getItem("vaultKey")
   ).toString();
-  console.log(encrypedData);
   fetch("/api", {
     method: "POST",
     headers: {
@@ -140,7 +137,7 @@ document.querySelector("#recordForm").addEventListener("submit", (form) => {
     body: JSON.stringify({ name: hashedName, content: encrypedData }),
   });
   let newData = JSON.parse(sessionStorage.getItem("data"));
-  newData[form.srcElement.name.value] = data;
+  newData[hashedName] = data;
   sessionStorage.setItem("data", JSON.stringify(newData));
   document.querySelector("#recordModal .close-button").click();
   form.preventDefault();
