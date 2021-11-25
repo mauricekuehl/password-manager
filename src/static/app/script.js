@@ -23,7 +23,15 @@ function getData() {
           )
         );
       });
-      sessionStorage.setItem("data", JSON.stringify(data));
+      sessionStorage.setItem(
+        "data",
+        JSON.stringify(
+          Object.keys(data)
+            .sort((a, b) => (data[a].name > data[b].name ? 1 : -1))
+            .reduce((r, k) => ((r[k] = data[k]), r), {})
+        )
+      );
+      console.log(JSON.parse(sessionStorage.getItem("data")));
       renderData();
     })
     .catch((error) => {
