@@ -67,18 +67,28 @@ nav button {
   margin: 0.5rem;
   cursor: pointer;
 }
+#deleteConfirmation .modal-body {
+  display: flex;
+}
+#deleteConfirmation .modal-body button {
+  font-size: 1.25rem;
+}
 .modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: 200ms ease-in-out;
-  border: 1px solid black;
+  border: 1px solid #5cd4a67a;
   border-radius: 10px;
   z-index: 10;
-  background-color: white;
+  color: #000;
+  background-color: #1b1c2b;
   width: 500px;
   max-width: 80%;
+}
+.modal-body * {
+  margin: 0.25rem;
 }
 .modal.active {
   transform: translate(-50%, -50%) scale(1);
@@ -88,7 +98,7 @@ nav button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #5cd4a67a;
 }
 .modal-header .title {
   font-size: 1.25rem;
@@ -103,7 +113,7 @@ nav button {
   font-weight: bold;
 }
 .modal-body {
-  padding: 10px 15px;
+  padding: 15px 20px;
 }
 #overlay {
   position: fixed;

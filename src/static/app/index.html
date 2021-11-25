@@ -9,7 +9,6 @@
     <title>Document</title>
   </head>
   <body>
-    <main>
     <nav>
       <h1><a href="/">password manager</a></h1>
       <div>
@@ -22,7 +21,7 @@
     </nav>
     <div class="modal" id="recordModal">
       <div class="modal-header">
-        <div class="title">Add/Change Record</div>
+        <div class="title">add/change record</div>
         <button data-close-button class="close-button">&times;</button>
       </div>
       <div class="modal-body">
@@ -71,9 +70,14 @@
       </div>
     </div>
     <div class="modal" id="deleteConfirmation">
-      <div>delete Record</div>
-      <button id="approvedDeletion">ok</button>
-      <button data-close-button class="close-button">stop</button>
+      <div class="modal-header">
+        <div class="title">delete record</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <button id="approvedDeletion">ok</button>
+        <button data-close-button class="close-button">stop</button>
+      </div>
     </div>
     <div id="overlay"></div>
     <div id="entries"></div>
