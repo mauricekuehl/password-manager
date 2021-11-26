@@ -44,9 +44,10 @@ function renderData() {
   let html = "";
   for (const key in data) {
     if (Object.hasOwnProperty.call(data, key)) {
-      const elm = data[key];
+      let elm = data[key];
       if (elm.url === "") {
-        var hostname = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        elm.url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        var hostname = "";
       } else {
         var hostname = new URL(elm.url).hostname;
       }
