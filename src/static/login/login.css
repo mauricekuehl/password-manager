@@ -3,7 +3,6 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  height: 140vh;
 }
 main {
   height: 100%;
@@ -12,7 +11,7 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 25vh;
+  padding-bottom: 10rem;
 }
 h1 {
   font-size: 2.25rem;
