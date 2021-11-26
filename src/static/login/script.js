@@ -22,7 +22,11 @@ document
     window.location.replace("/app");
   });
 function wrongLogin() {
-  console.log("wrongLogin");
+  const elm = document.querySelector("#wrongLogin");
+  elm.style.display = "block";
+  elm.classList.remove("wrongLoginAni");
+  void elm.offsetWidth;
+  elm.classList.add("wrongLoginAni");
 }
 async function digestMessage(message) {
   const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
