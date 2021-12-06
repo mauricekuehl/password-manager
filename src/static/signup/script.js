@@ -16,7 +16,6 @@ document
       alert(error);
     }
   });
-
 async function digestMessage(message) {
   const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-512", msgUint8); // hash the message
