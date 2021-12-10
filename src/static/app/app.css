@@ -65,6 +65,9 @@ nav button {
   margin: 0.5rem;
   cursor: pointer;
 }
+#nav img:active{
+  width: 2.5rem;
+}
 #deleteConfirmation .modal-body {
   display: flex;
 }
